@@ -1,0 +1,117 @@
+﻿<script type="text/javascript">
+    function callAjax(url, method, async, withCredentials, callback, response, shouldAppendDateTime, body) {
+        try {
+            var xmlhttp;
+            // compatible with IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+            xmlhttp.onload = function () {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    if (callback)
+                        if (response) {
+                            callback(xmlhttp.responseText, response);
+                        }
+                        else {
+                            callback(xmlhttp.responseText);
+                        }
+                }
+            }
+            xmlhttp.onerror = function (e) {
+                throw e;
+            }
+            if (shouldAppendDateTime == "true") {
+                url = (url.indexOf('?') > -1 ? url + '&' : url + '?');
+                url = url + '_=' + new Date().getTime();
+            }
+            xmlhttp.open(method, url, async);
+            if (body) {
+                xmlhttp.setRequestHeader("Content-Type", "application/json");
+            }
+            if (withCredentials)
+                xmlhttp.withCredentials = true;
+            xmlhttp.send(JSON.stringify(body));
+        }
+        catch (ex) {
+            throw ex;
+        }
+    }
+    function getJobDescription() {
+        //Resetting fields
+        var jobDescriptionElem = document.getElementById("job-description");
+        var targetJobTitleElem = document.getElementById("target-job-title");
+        var targetCompanyElem = document.getElementById("target-company");
+        var jobDetailsBlockElem = document.getElementById("job-details");
+        var fetchLabelElem = document.getElementById("fetching");
+
+        jobDetailsBlockElem.classList.remove("showFields");
+        jobDetailsBlockElem.classList.add("hideFields");
+        fetchLabelElem.style.display = "block";
+        
+        var url = "/api/api/getjobdescription";
+        var JDLinkURL = document.getElementById("job-link").value;
+        callAjax(url + "?url=" + JDLinkURL, "GET", true, true, (resp) => {
+            //Setting response
+            resp = JSON.parse(resp);
+            jobDescriptionElem.innerText = resp.jobDescription;
+            targetJobTitleElem.innerText = resp.targetJobTitle;
+            targetCompanyElem.innerText = resp.targetCompany;
+
+            jobDetailsBlockElem.classList.remove("hideFields");
+            jobDetailsBlockElem.classList.add("showFields");
+            fetchLabelElem.style.display = "none";
+        })
+    }
+</script>
+<style>
+    .textarea {
+        width: 100%;
+        height: 100px;
+        border: 1px solid #ccc;
+        max-width: 1000px;
+    }
+    .button {
+        display: block;
+        font-size: 15px;
+        padding: 5px;
+        margin-top: 10px;
+        background: orange;
+        border: none;
+        color: #fff;
+        width: 150px;
+        height: 40px;
+        margin-bottom: 10px;
+    }
+    .dynamic-field {
+        border: 1px solid #ccc;
+        padding: 2px;
+        margin-bottom: 15px;
+    }
+    .hideFields label, .hideFields div{
+        display: none;
+    }
+    .showFields label, .showFields div {
+        display: block;
+    }
+    #job-details label{
+        margin-top: 15px;
+    }
+</style>
+<div class="input" style="margin-top: 30px">
+    <textarea class="textarea" type="text" id="job-link"></textarea>
+    <input class="button" type="button" onclick="getJobDescription()" value="Continue"/>
+</div>
+<label id="fetching" style="display:none">Fetching Details...</label>
+<div id="job-details" class="hideFields">
+    <label>Target Job Title</label>
+    <div id="target-job-title" class="dynamic-field">
+
+    </div>
+    <label>Target Company</label>
+    <div id="target-company" class="dynamic-field">
+
+    </div>
+    <label>Job Description</label>
+    <div id="job-description" class="dynamic-field">
+
+    </div>
+</div>
+
