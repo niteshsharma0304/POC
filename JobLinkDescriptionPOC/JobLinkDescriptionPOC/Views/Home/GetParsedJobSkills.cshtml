@@ -1,0 +1,109 @@
+﻿<script type="text/javascript">
+    function getParsedJobSkills() {
+        //Resetting fields
+        var jobSkillsElem = document.getElementById("job-skills");
+        var jobKeysElem = document.getElementById("job-keys");
+        var targetJobTitleElem = document.getElementById("target-job-title");
+        var targetCompanyElem = document.getElementById("target-company");
+        var jobDescriptionElem = document.getElementById("job-description");
+        var jobDetailsBlockElem = document.getElementById("job-details");
+        var fetchLabelElem = document.getElementById("fetching");
+
+        jobDetailsBlockElem.classList.remove("showFields");
+        jobDetailsBlockElem.classList.add("hideFields");
+        fetchLabelElem.style.display = "block";
+
+        var url = "/api/api/GetParsedJobSkills";
+        var request = {
+            "jobTitle": targetJobTitleElem.value,
+            "companyName": targetCompanyElem.value,
+            "jobDescription": jobDescriptionElem.value
+        }
+        callAjax(url, "POST", true, true, (resp) => {
+            //Setting response
+            resp = JSON.parse(resp);
+            jobSkillsElem.innerText = resp.jobSkills;
+            jobKeysElem.innerText = resp.jobKeys;
+
+            jobDetailsBlockElem.classList.remove("hideFields");
+            jobDetailsBlockElem.classList.add("showFields");
+            fetchLabelElem.style.display = "none";
+        }, undefined, undefined, request);
+    }
+</script>
+<style>
+    .textarea {
+        width: 100%;
+        height: 100px;
+        border: 1px solid #ccc;
+        max-width: 1000px;
+        display: block;
+    }
+
+    .textbox {
+        width: 100%;
+        height: 30px;
+        border: 1px solid #ccc;
+        max-width: 1000px;
+        display: block;
+    }
+
+    .button {
+        display: block;
+        font-size: 15px;
+        padding: 5px;
+        margin-top: 10px;
+        background: orange;
+        border: none;
+        color: #fff;
+        width: 150px;
+        height: 40px;
+        margin-bottom: 10px;
+    }
+
+    .dynamic-field {
+        border: 1px solid #ccc;
+        padding: 2px;
+        margin-bottom: 15px;
+        min-height: 10px;
+    }
+
+    .hideFields label, .hideFields div {
+        display: none;
+    }
+
+    .showFields label, .showFields div {
+        display: block;
+    }
+
+    #job-details label {
+        margin-top: 15px;
+    }
+
+    .input label{
+        margin-top: 20px;
+    }
+</style>
+<div class="input" style="margin-top: 30px">
+    <label>Target Job Title</label>
+    <input type="text" id="target-job-title" value="Line Cook" class="textbox"/>
+    <label>Target Company</label>
+    <input type="text" id="target-company" value="Navy Beach Restaurant" class="textbox"/>
+    <label>Job Description</label>
+    <textarea class="textarea" type="text" id="job-description" value="">
+Line Cook for Waterfront Restaurant at Yacht Haven Grande Set up and stock stations with all necessary supplies Prepare food for service chopping vegetables, butchering meat, or preparing sauces Cook menu items in cooperation with the rest of the kitchen staff Answer, report and follow executive or sous chef’s instructions Clean up station and take care of leftover food Stock inventory appropriately Ensure that food comes out simultaneously, in high quality and in a timely fashion Comply with nutrition and sanitation regulations and safety standards Maintain a positive and professional approach with coworkers and customers Must have valid VI Health Card Related keywords: cook, line cook, restaurant, hiring immediately Job Types: Full-time, Part-time Pay: $12.00 - $18.00 per hour        
+</textarea>
+    <input class="button" type="button" onclick="getParsedJobSkills()" value="Continue" />
+</div>
+<label id="fetching" style="display:none">Parsing Job Skills And Keys...</label>
+<div id="job-details" class="hideFields">
+    <label>Job Skills</label>
+    <div id="job-skills" class="dynamic-field">
+
+    </div>
+    <label>Job Keys</label>
+    <div id="job-keys" class="dynamic-field">
+
+    </div>
+</div>
+

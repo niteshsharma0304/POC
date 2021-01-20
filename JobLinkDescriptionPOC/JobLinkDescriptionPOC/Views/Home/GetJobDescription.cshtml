@@ -1,44 +1,11 @@
 ﻿<script type="text/javascript">
-    function callAjax(url, method, async, withCredentials, callback, response, shouldAppendDateTime, body) {
-        try {
-            var xmlhttp;
-            // compatible with IE7+, Firefox, Chrome, Opera, Safari
-            xmlhttp = new XMLHttpRequest();
-            xmlhttp.onload = function () {
-                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                    if (callback)
-                        if (response) {
-                            callback(xmlhttp.responseText, response);
-                        }
-                        else {
-                            callback(xmlhttp.responseText);
-                        }
-                }
-            }
-            xmlhttp.onerror = function (e) {
-                throw e;
-            }
-            if (shouldAppendDateTime == "true") {
-                url = (url.indexOf('?') > -1 ? url + '&' : url + '?');
-                url = url + '_=' + new Date().getTime();
-            }
-            xmlhttp.open(method, url, async);
-            if (body) {
-                xmlhttp.setRequestHeader("Content-Type", "application/json");
-            }
-            if (withCredentials)
-                xmlhttp.withCredentials = true;
-            xmlhttp.send(JSON.stringify(body));
-        }
-        catch (ex) {
-            throw ex;
-        }
-    }
     function getJobDescription() {
         //Resetting fields
         var jobDescriptionElem = document.getElementById("job-description");
         var targetJobTitleElem = document.getElementById("target-job-title");
         var targetCompanyElem = document.getElementById("target-company");
+        var targetJobSkillsElem = document.getElementById("job-skills");
+        var targetJobKeysElem = document.getElementById("job-keys");
         var jobDetailsBlockElem = document.getElementById("job-details");
         var fetchLabelElem = document.getElementById("fetching");
 
@@ -48,12 +15,14 @@
         
         var url = "/api/api/getjobdescription";
         var JDLinkURL = document.getElementById("job-link").value;
-        callAjax(url + "?url=" + JDLinkURL, "GET", true, true, (resp) => {
+        callAjax(url + "?url=" + encodeURIComponent(JDLinkURL), "GET", true, true, (resp) => {
             //Setting response
             resp = JSON.parse(resp);
             jobDescriptionElem.innerText = resp.jobDescription;
             targetJobTitleElem.innerText = resp.targetJobTitle;
             targetCompanyElem.innerText = resp.targetCompany;
+            targetJobSkillsElem.innerText = resp.jobSkills;
+            targetJobKeysElem.innerText = resp.jobKeys;
 
             jobDetailsBlockElem.classList.remove("hideFields");
             jobDetailsBlockElem.classList.add("showFields");
@@ -66,7 +35,8 @@
         width: 100%;
         height: 100px;
         border: 1px solid #ccc;
-        max-width: 1000px;
+        max-width: 1500px;
+        display: block;
     }
     .button {
         display: block;
@@ -84,6 +54,7 @@
         border: 1px solid #ccc;
         padding: 2px;
         margin-bottom: 15px;
+        min-height: 25px;
     }
     .hideFields label, .hideFields div{
         display: none;
@@ -94,10 +65,15 @@
     #job-details label{
         margin-top: 15px;
     }
+    #job-description{
+        max-height: 200px;
+        overflow: auto;
+    }
 </style>
 <div class="input" style="margin-top: 30px">
+    <label>Job Link URL</label>
     <textarea class="textarea" type="text" id="job-link"></textarea>
-    <input class="button" type="button" onclick="getJobDescription()" value="Continue"/>
+    <input class="button" type="button" onclick="getJobDescription()" value="Continue" />
 </div>
 <label id="fetching" style="display:none">Fetching Details...</label>
 <div id="job-details" class="hideFields">
@@ -111,6 +87,14 @@
     </div>
     <label>Job Description</label>
     <div id="job-description" class="dynamic-field">
+
+    </div>
+    <label>Parsed Job Skills</label>
+    <div id="job-skills" class="dynamic-field">
+
+    </div>
+    <label>Parsed Job Keys</label>
+    <div id="job-keys" class="dynamic-field">
 
     </div>
 </div>

@@ -1,3 +1,41 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<script type="text/javascript">
+    function callAjax(url, method, async, withCredentials, callback, response, shouldAppendDateTime, body) {
+        try {
+            var xmlhttp;
+            // compatible with IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+            xmlhttp.onload = function () {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    if (callback)
+                        if (response) {
+                            callback(xmlhttp.responseText, response);
+                        }
+                        else {
+                            callback(xmlhttp.responseText);
+                        }
+                }
+            }
+            xmlhttp.onerror = function (e) {
+                throw e;
+            }
+            if (shouldAppendDateTime == "true") {
+                url = (url.indexOf('?') > -1 ? url + '&' : url + '?');
+                url = url + '_=' + new Date().getTime();
+            }
+            xmlhttp.open(method, url, async);
+            if (body) {
+                xmlhttp.setRequestHeader("Content-Type", "application/json");
+                xmlhttp.setRequestHeader("Accept", "application/json");
+            }
+            if (withCredentials)
+                xmlhttp.withCredentials = true;
+            xmlhttp.send(JSON.stringify(body));
+        }
+        catch (ex) {
+            throw ex;
+        }
+    }
+</script>
