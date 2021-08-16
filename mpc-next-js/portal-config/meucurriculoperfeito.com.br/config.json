@@ -1,0 +1,10 @@
+{
+  "portalId": 62,
+  "logoPath": "/mbr/images/mbr-logo.svg",
+  "pageTitle": "Cover Letter - My Perfect Resume",
+  "favIconUrl": "/mbr/images/favicon.png",
+  "allowOptions": "true",
+  "requestingDomain": "meucurriculoperfeito.com.br",
+  "builderBasePath": "/build-letter",
+  "fontFamilies": [ "Source+Sans+Pro:300,400,500,600,700", "Roboto+Slab:300,400,500" ]
+}

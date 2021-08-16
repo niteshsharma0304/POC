@@ -1,0 +1,22 @@
+{
+  "portalId": 33,
+  "logoPath": "/mes/images/mes-logo.svg",
+  "pageTitle": "Carta de presentación – MiCVideal",
+  "favIconUrl": "/mes/images/favicon.png",
+  "allowOptions": "false",
+  "requestingDomain": "micvideal.es",
+  "portalTitle": "micvideal",
+  "unsupportedBrowserPath": "/information/unsupportedbrowsers",
+  "hiwCssProp": {
+    "logoWidth": "198px"
+  },
+  "portalCD": "mes",
+  "culture": "es-ES",
+  "isIntl": true,
+  "isAccountsEnabled": true,
+  "smallRegApiURL": true,
+  "builderBasePath": "/crear-carta",
+  "isCheckVulnerable": true,
+  "fontFamilies": [ "Source+Sans+Pro:300,400,500,600,700", "Roboto+Slab:300,400,500" ]
+}
+  

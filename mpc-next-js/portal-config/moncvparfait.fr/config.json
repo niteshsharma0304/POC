@@ -1,0 +1,22 @@
+{
+  "portalId": 32,
+  "logoPath": "/mfr/images/logo-mpr-fr.png",
+  "pageTitle": "Lettre de motivation - Mon CV Parfait",
+  "favIconUrl": "/mfr/images/favicon.png",
+  "allowOptions": "false",
+  "requestingDomain": "moncvparfait.fr",
+  "portalTitle": "monCVparfait",
+  "builderBasePath": "/creer-lettre",
+  "unsupportedBrowserPath": "/information/unsupportedbrowsers",
+  "hiwIconPath": "/mfr/images/icon-how-it-works.png",
+  "hiwCssProp": {
+    "logoWidth": "198px"
+  },
+  "portalCD": "mfr",
+  "culture": "fr-FR",
+  "isIntl": true,
+  "isAccountsEnabled": true,
+  "smallRegApiURL": true,
+  "isCheckVulnerable": true,
+  "fontFamilies": [ "Source+Sans+Pro:300,400,500,600,700", "Roboto+Slab:300,400,500" ]
+}

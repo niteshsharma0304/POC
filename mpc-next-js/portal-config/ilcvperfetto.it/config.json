@@ -1,0 +1,22 @@
+{
+  "portalId": 37,
+  "logoPath": "/mit/images/mit_logo.svg",
+  "pageTitle": "Lettera di presentazione – IlCVperfetto",
+  "favIconUrl": "/mit/images/favicon.png",
+  "allowOptions": "false",
+  "requestingDomain": "ilcvperfetto.it",
+  "portalTitle": "ilcvperfetto",
+  "unsupportedBrowserPath": "/information/unsupportedbrowsers",
+  "hiwCssProp": {
+    "logoWidth": "198px"
+  },
+  "portalCD": "mit",
+  "culture": "it-IT",
+  "isIntl": true,
+  "isAccountsEnabled": true,
+  "smallRegApiURL": true,
+  "builderBasePath": "/crea-lettera",
+  "isCheckVulnerable": true,
+  "fontFamilies": [ "Source+Sans+Pro:300,400,500,600,700", "Roboto+Slab:300,400,500" ]
+}
+  
