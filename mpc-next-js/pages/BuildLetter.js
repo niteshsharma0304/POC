@@ -1,10 +1,10 @@
 import Main from './shared/Main.js';
 
-export default function BuildLetter() {
+export default function BuildLetter(props) {
     return (
         <>
-            Build-letter-page-loading-main
-            <Main></Main>
+            Build-letter-page-loading-main - git app
+            <Main {...props}></Main>
         </>
     );
 }

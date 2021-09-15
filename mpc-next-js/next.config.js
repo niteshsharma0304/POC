@@ -1,19 +1,20 @@
-const {lstPortals} = require("./constants/typecd");
+var portalConfigPath, portalConfig, portal = process.env.npm_config_portal;
+portalConfigPath = "./portal-config/" + portal + "/config.json";
+portalConfig = require(portalConfigPath);
 
 var settings = {
   common: {
-    test: 1
+    apiUrl: "https://api-qa-embedded-builder."+portalConfig.requestingDomain+"/api/v1/"
   }
 };
 
-var portalConfigPath, portalConfig;
+settings.portalSettings = portalConfig;
 
-lstPortals.map((portal)=>{
-  portal = "myperfectcoverletter.com";
-  portalConfigPath = "./portal-config/" + portal + "/config.json";
-  portalConfig = require(portalConfigPath);
-  settings[portal] = portalConfig;
-});
+// console.log("---------------------------------------");
+// console.log(process.env.npm_config_portal);
+// console.log(process.env.npm_config_env);
+// console.log(settings);
+// console.log("---------------------------------------");
 
 module.exports = {
   env: {

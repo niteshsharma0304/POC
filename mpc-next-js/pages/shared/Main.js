@@ -1,10 +1,15 @@
 
-import { getPortalSettings } from "../../helpers/CommonUtils";
-
-var globalObj = {};
-globalObj.portalSettings = getPortalSettings();
+import Head from 'next/head';
 
 export default function Main(props) {
+    //console.log("----------->", props.featuresList );
+    const renderHeadScripts = () =>{
+        return(
+            <script type="text/javascript">
+                window.RDL = {JSON.stringify(props)}
+            </script>
+        );
+    }
     const renderMobileTags = () => {
         if (props.isMobile) {
             return (
@@ -18,21 +23,31 @@ export default function Main(props) {
     }
     return (
         <>
-            <head>
-                <title>{globalObj.portalSettings.pageTitle}</title>
+            <Head>
+                <title>{props.pageTitle}</title>
                 <meta charset="utf-8" />
                 <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
                 <meta name="robots" content="noindex, nofollow" />
                 <link rel="icon" href="/favicon.ico" />
                 {renderMobileTags()}
-            </head>
-            <body>
-                <img src={globalObj.portalSettings.logoPath} className="logo" />
+                {renderHeadScripts()}
+            </Head>
+            <>
+                <img src={props.logoPath} className="logo" />
                 Hello Main
                 {props.isMobile && <div id="mobile-view">Mobile View</div>}
-            </body>
+            </>
         </>
-
-
-    );
+    );    
 }
+
+// export async function getStaticProps(props) {
+    // const skipCacheQS = props.isSkipCache? "?skipCache=true": "";
+    // console.log("------------props->", props);
+    // const apiUrl = props.apiUrl + "config/features/" + props.portalCD + skipCacheQS;
+    // const res = await fetch(apiUrl);
+    // const featuresList = await res.json();
+    // return {
+    //   props: {featuresList}, // will be passed to the page component as props
+    // }
+//   }
