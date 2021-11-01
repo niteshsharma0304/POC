@@ -2,13 +2,16 @@
 import Head from 'next/head';
 
 export default function Main(props) {
-    //console.log("----------->", props.featuresList );
     const renderHeadScripts = () =>{
-        return(
-            <script type="text/javascript">
-                window.RDL = {JSON.stringify(props)}
-            </script>
-        );
+        console.log("----here---------", (props.featuresList && props.featuresList.length));
+        if(props.featuresList){
+            return(
+                <script type="text/javascript">
+                    window.RDL = {JSON.stringify(props)}
+                </script>
+            );
+        } 
+        return null;
     }
     const renderMobileTags = () => {
         if (props.isMobile) {
@@ -41,13 +44,15 @@ export default function Main(props) {
     );    
 }
 
-// export async function getStaticProps(props) {
-    // const skipCacheQS = props.isSkipCache? "?skipCache=true": "";
-    // console.log("------------props->", props);
-    // const apiUrl = props.apiUrl + "config/features/" + props.portalCD + skipCacheQS;
-    // const res = await fetch(apiUrl);
-    // const featuresList = await res.json();
-    // return {
-    //   props: {featuresList}, // will be passed to the page component as props
-    // }
-//   }
+export async function getStaticProps() {
+    const isSkipCache = process.env.settings.portalSettings.isSkipCache;
+    const portalCD = process.env.settings.portalSettings.portalCD;
+    let apiUrl = process.env.settings.common.apiUrl;
+    const skipCacheQS = isSkipCache? "?skipCache=true": "";
+    apiUrl = apiUrl + "config/features/" + portalCD + skipCacheQS;
+    const res = await fetch(apiUrl);
+    const featuresList = await res.json();
+    return {
+      props: {featuresList}, // will be passed to the page component as props
+    }
+  }

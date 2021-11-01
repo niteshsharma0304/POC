@@ -119,6 +119,7 @@ namespace JobLinkDescriptionPOC.Utilities
                     int indexAt = comp.ToLower().IndexOf(" at ");
                     if (indexAt > 2)
                         comp = comp.Substring(indexAt + 3);
+
                 }
             }
             catch (Exception ex) { comp = "i: " + i + ", Selector: " + compQSList[i] + ", " + ex.Message + "-" + ex.StackTrace; }
